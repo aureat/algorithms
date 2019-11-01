@@ -29,8 +29,23 @@ class Stack(object):
         if self.head:
             return self.head.data
 
+    # def __bool__(self):
+    #     if self.counter > 0:
+    #         return True
+    #     return False
+
+    def __nonzero__(self):
+        if self.counter > 0:
+            return True
+        return False
+
+    def __len__(self):
+        return self.counter
+
     def getAll(self):
         start = self.head
+        text = ''
         while start is not None:
-            print(start.data)
+            text += str(start.data) + ' '
             start = start.nextNode
+        print(text)
