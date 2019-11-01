@@ -10,6 +10,10 @@ class Graph(object):
         self.graph[v].append(w)
         self.graph[w].append(v)
 
+    def add_edge_cost(self, v, w, cost):
+        self.graph[v].append((w, cost))
+        self.graph[w].append((v, cost))
+
     def num_edges_of(self, v):
         return len(self.graph[v])
 
@@ -18,10 +22,3 @@ class Graph(object):
 
     def __getitem__(self, key):
         return self.graph[key]
-
-# g = Graph(6)
-# g.add_edge(1,2)
-# g.add_edge(1,3)
-# g.add_edge(2,4)
-# g.add_edge(1,5)
-# g.add_edge(5,6)

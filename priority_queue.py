@@ -23,7 +23,7 @@ class PriorityQueue(object):
             next = next.next
         next.next = newNode
 
-    def get(self):
+    def getMax(self):
         helper_node = self.first
         max = helper_node.priority
         f = 0
@@ -37,6 +37,28 @@ class PriorityQueue(object):
         if f and self.first.priority != max:
             considered = self.first
             while considered.next != None and considered.next.priority != max:
+                considered = considered.next
+            node = considered.next
+            considered.next = considered.next.next
+            return node.data
+        node = self.first
+        self.first = self.first.next
+        return node.data
+
+    def getMin(self):
+        helper_node = self.first
+        min = helper_node.priority
+        f = 0
+        for _ in range(self.counter - 1):
+            if helper_node.next.priority < min:
+                min = helper_node.next.priority
+                f = 1
+            helper_node = helper_node.next
+        considered = self.first
+        self.counter -= 1
+        if f and self.first.priority != min:
+            considered = self.first
+            while considered.next != None and considered.next.priority != min:
                 considered = considered.next
             node = considered.next
             considered.next = considered.next.next
