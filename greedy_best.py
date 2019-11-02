@@ -1,5 +1,5 @@
 """
-***   A-Star Search
+***   Greedy Best-First Search
 ***   arg G: Dictionary graph object
 ***   arg s: Starting node label
 ***   arg g: Goal node label
@@ -7,20 +7,17 @@
 ***   returns an ordered list of nodes as shortest path to the goal
 """
 
-def a_star(G, s, g):
+def greedy_best(G, s, g):
     Q = PriorityQueue()
     Q.put(s, heuristic(s))
     trav = {s: None}
-    total_cost = {s: 0}
     while Q:
         v = Q.getMin()
         if v == g:
             break
         for j in G[v]:
-            cost = total_cost[v] + j[1]
-            if j[0] not in trav or cost < total_cost[j[0]]:
-                total_cost[j[0]] = cost
-                priority = cost + heuristic(j[0])
+            if j[0] not in trav:
+                priority = heuristic(j[0])
                 Q.put(j[0], priority)
                 trav[j[0]] = v
     # print(total_cost)

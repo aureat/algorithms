@@ -24,41 +24,33 @@ class PriorityQueue(object):
         next.next = newNode
 
     def getMax(self):
-        helper_node = self.first
-        max = helper_node.priority
-        f = 0
-        for _ in range(self.counter - 1):
-            if helper_node.next.priority > max:
-                max = helper_node.next.priority
-                f = 1
-            helper_node = helper_node.next
-        considered = self.first
-        self.counter -= 1
-        if f and self.first.priority != max:
-            considered = self.first
-            while considered.next != None and considered.next.priority != max:
-                considered = considered.next
-            node = considered.next
-            considered.next = considered.next.next
-            return node.data
-        node = self.first
-        self.first = self.first.next
-        return node.data
+        return self.prioritize('max')
 
     def getMin(self):
+        return self.prioritize('min')
+
+    def prioritize(self, how):
         helper_node = self.first
-        min = helper_node.priority
+        extr = helper_node.priority
         f = 0
         for _ in range(self.counter - 1):
-            if helper_node.next.priority < min:
-                min = helper_node.next.priority
-                f = 1
+            if how == 'min':
+                if helper_node.next.priority < extr:
+                    extr = helper_node.next.priority
+                    f = 1
+            elif how == 'max':
+                if helper_node.next.priority > extr:
+                    extr = helper_node.next.priority
+                    f = 1
             helper_node = helper_node.next
+        return self.get_val(extr, f)
+
+    def get_val(self, extr, f):
         considered = self.first
         self.counter -= 1
-        if f and self.first.priority != min:
+        if f and self.first.priority != extr:
             considered = self.first
-            while considered.next != None and considered.next.priority != min:
+            while considered.next != None and considered.next.priority != extr:
                 considered = considered.next
             node = considered.next
             considered.next = considered.next.next
@@ -71,7 +63,7 @@ class PriorityQueue(object):
         data = []
         next = self.first
         while next is not None:
-            data.append((next.data, next.next))
+            data.append((next.data, next.next, next.priority))
             next = next.next
         print(data)
 
