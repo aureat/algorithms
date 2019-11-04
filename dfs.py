@@ -6,7 +6,6 @@ def DFS(G, s):
     S = [s]
     while S:
         flag = 0
-        print(S)
         for i in G.graph[S[-1]]:
             if i not in trav:
                 trav.append(i)
